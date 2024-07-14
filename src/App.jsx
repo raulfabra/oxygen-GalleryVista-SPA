@@ -1,24 +1,37 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPhotosListThunk } from './endpoints/photos/photosThunk'
+import { getPhotosRandomThunk } from './endpoints/photosRandom/photosRandomThunk'
 import debounce from 'just-debounce-it'
 
 function App () {
+  const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const photosListData = useSelector((state) => state.photos.data)
+  const photosRandomData = useSelector((state) => state.photosRandom.data)
 
   const debouncedGetPhotos = useCallback(
     debounce(query => {
-      console.log('query: ', query)
       dispatch(getPhotosListThunk(query))
+    }, 1000)
+  )
+  const debounceRandomPhotos = useCallback(
+    debounce(() => {
+      setLoading(false)
+      const randomPage = Math.ceil(Math.random() * 300)
+      dispatch(getPhotosRandomThunk(randomPage))
     }, 1000)
   )
   const handleSearch = (event) => {
     const query = event.target.value
-    console.log(query)
-
-    debouncedGetPhotos(query)
+    if (query.length === 0 || query.startsWith(' ')) {
+      debounceRandomPhotos()
+    } else debouncedGetPhotos(query)
   }
+
+  useEffect(() => {
+    debounceRandomPhotos()
+  }, [])
 
   return (
     <>
@@ -40,8 +53,15 @@ function App () {
           <img src='public\magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
         </div>
       </section>
+      {loading && <div className='spinner' />}
       <section className='photos--gallery'>
-        {photosListData.length > 0 && photosListData.map((photo) => (
+        {!loading && photosListData?.map((photo) => (
+          <div key={photo.id} className='photos--container'>
+            <img src={photo.urls.regular} className='photos--img' alt={photo.alt_description} />
+            <img src='src\assets\icon.svg' alt='icon__like' className='photos--like' />
+          </div>
+        ))}
+        {!loading && photosRandomData?.map((photo) => (
           <div key={photo.id} className='photos--container'>
             <img src={photo.urls.regular} className='photos--img' alt={photo.alt_description} />
             <img src='src\assets\icon.svg' alt='icon__like' className='photos--like' />

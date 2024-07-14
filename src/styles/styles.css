@@ -1,4 +1,7 @@
-@charset "UTF-8";
+:root {
+  background: linear-gradient(180deg, #262833 0%, #393B4D 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,10 +11,6 @@
 body {
   text-align: center;
   min-width: 320px;
-}
-
-#root {
-  background: linear-gradient(180deg, #262833 0%, #393B4D 100%);
 }
 
 .navBar {
@@ -52,6 +51,24 @@ body {
   left: 75%;
 }
 
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+  margin: 100px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .photos--gallery {
   margin: auto;
   width: 80%;
@@ -63,10 +80,12 @@ body {
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease;
+  border-radius: 15%;
 }
 .photos--container:hover {
   transform: scale(1.1);
   z-index: 33;
+  border: 1px solid #FB3B64;
   cursor: pointer;
 }
 .photos--img {
@@ -76,14 +95,11 @@ body {
 .photos--like {
   position: absolute;
   bottom: 10px;
-  /* Ajusta según sea necesario */
   right: 10px;
-  /* Ajusta según sea necesario */
   color: white;
   font-size: 1.5em;
   width: 10%;
   background-color: rgba(152, 42, 42, 0.8);
-  /* Fondo semitransparente */
   padding: 5px;
   border-radius: 50%;
   cursor: pointer;
@@ -91,7 +107,6 @@ body {
 }
 .photos--like:hover {
   background-color: rgba(255, 0, 0, 0.948);
-  /* Cambio de color en hover */
 }
 
 @media only screen and (min-width: 730px) {
@@ -141,6 +156,9 @@ body {
   }
   .photos--gallery {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .photos--like {
+    right: 50px;
   }
 }
 
