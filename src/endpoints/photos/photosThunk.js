@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async () => {
+export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async (query) => {
   try {
-    const request = await fetch('https://api.unsplash.com/photos/',
+    const request = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${query}`,
       {
         method: 'GET',
         headers: {
@@ -14,7 +14,7 @@ export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async
     if (request.ok) {
       const jsonData = await request.json()
       console.log(jsonData)
-      return jsonData.map((data) => ({ id: data.id, image: data.urls.regular }))
+      return jsonData.results
     }
   } catch (error) {
     console.log(error)
