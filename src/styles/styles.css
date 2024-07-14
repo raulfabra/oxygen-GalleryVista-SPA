@@ -51,6 +51,18 @@ body {
   left: 75%;
 }
 
+.gallery__container {
+  margin: auto;
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.gallery__photo {
+  width: 100%;
+  height: auto;
+}
+
 @media only screen and (min-width: 730px) {
   .searchBar__container--iconGlass {
     left: 80%;
@@ -95,6 +107,9 @@ body {
     position: absolute;
     top: 45%;
     left: 90%;
+  }
+  .gallery__container {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

@@ -1,9 +1,15 @@
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPhotosListThunk } from './endpoints/photos/photosThunk'
 
 function App () {
-  useEffect(() => {
+  const dispatch = useDispatch()
+  const photosListData = useSelector((state) => state.photos.data)
 
+  useEffect(() => {
+    dispatch(getPhotosListThunk())
   }, [])
+
   return (
     <>
       <header className='navBar'>
@@ -24,7 +30,11 @@ function App () {
           <img src='public\magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
         </div>
       </section>
-      <section className='photographies' />
+      <section className='gallery__container'>
+        {photosListData.length > 0 && photosListData.map(({ id, image }, index) => (
+          <img src={image} key={id} className='gallery__photo' />
+        ))}
+      </section>
     </>
   )
 }
