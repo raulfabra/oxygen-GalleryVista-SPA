@@ -1,7 +1,3 @@
-:root {
-  background: linear-gradient(180deg, #262833 0%, #393B4D 100%);
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +7,8 @@
 body {
   text-align: center;
   min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #262833 0%, #393B4D 100%);
 }
 
 .main__page {
