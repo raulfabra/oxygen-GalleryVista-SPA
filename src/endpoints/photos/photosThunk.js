@@ -2,7 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async (query) => {
   try {
-    const request = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${query}`,
+    let URL = `https://api.unsplash.com/search/photos?page=1&query=${query}`
+    if (query === undefined || query.length === 0 || query.startsWith(' ')) {
+      URL = `https://api.unsplash.com/photos?page=${Math.ceil(Math.random() * 300)}`
+    }
+    const request = await fetch(URL,
       {
         method: 'GET',
         headers: {
@@ -13,11 +17,10 @@ export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async
     )
     if (request.ok) {
       const jsonData = await request.json()
-      console.log(jsonData)
-      return jsonData.results
+      console.log('Ahora es results ', jsonData.results || 'Ahora es APIRANDOM ', jsonData)
+      return jsonData.results || jsonData
     }
   } catch (error) {
-    console.log(error)
     return error
   }
 })

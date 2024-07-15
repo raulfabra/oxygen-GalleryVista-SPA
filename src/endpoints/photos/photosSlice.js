@@ -20,3 +20,7 @@ export const PhotosSlice = createSlice({
     })
   }
 })
+
+export const getPhotosListStatus = (state) => state.photos.status
+export const getPhotosListData = (state) => state.photos.data
+export const getPhotosListError = (state) => state.photos.error
