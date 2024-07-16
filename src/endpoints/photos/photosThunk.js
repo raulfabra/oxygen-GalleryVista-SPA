@@ -17,7 +17,6 @@ export const getPhotosListThunk = createAsyncThunk('photos/getPhotosList', async
     )
     if (request.ok) {
       const jsonData = await request.json()
-      console.log('Ahora es results ', jsonData.results || 'Ahora es APIRANDOM ', jsonData)
       return jsonData.results || jsonData
     }
   } catch (error) {
