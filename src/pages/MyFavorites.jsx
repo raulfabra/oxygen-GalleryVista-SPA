@@ -3,7 +3,7 @@ import { Header } from '../components/_header'
 import { Title } from '../components/_title'
 import { SearchBarFavourites } from '../components/searchBarFavourites'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPhotosLikedData, removeImage, orderByWidth, getPhotosLikedStatus, orderByHeight, orderByLike } from '../endpoints/favourites/photosLikedSlice'
+import { getPhotosLikedData, removeImage } from '../endpoints/favourites/photosLikedSlice'
 import { useEffect, useState } from 'react'
 
 function MyFavorites () {
@@ -11,17 +11,16 @@ function MyFavorites () {
   const dispatch = useDispatch()
 
   const photosLikedData = useSelector(getPhotosLikedData)
-  const photosLikedStatus = useSelector(getPhotosLikedStatus)
 
+  const [displayPhotos, setDisplayPhotos] = useState(photosLikedData)
+  const [width, setWidth] = useState(1000)
+  const [height, setHeight] = useState(1000)
+  const [likes, setLikes] = useState(0)
   const [yellowLikes, setYellowLikes] = useState(() => {
     const yellowLikesStorage = window.localStorage.getItem('photosLikedActive')
     if (yellowLikesStorage) return JSON.parse(yellowLikesStorage)
     else return []
   })
-
-  const [width, setWidth] = useState(1000)
-  const [height, setHeight] = useState(1000)
-  const [likes, setLikes] = useState(0)
 
   const handleDelete = (event) => {
     const removeId = event.target.getAttribute('datatype')
@@ -34,25 +33,22 @@ function MyFavorites () {
     setYellowLikes(newLikesActive)
   }
 
-  const handleWidth = (e) => {
-    setWidth(parseInt(e.target.value))
-    console.log(width)
-    dispatch(orderByWidth(parseInt(e.target.value)))
-  }
-  const handleheight = (e) => {
-    setHeight(parseInt(e.target.value))
+  const handleFilter = (e, typeOfFilter) => {
+    if (typeOfFilter === 'width') setWidth(parseInt(e.target.value))
+    if (typeOfFilter === 'height') setHeight(parseInt(e.target.value))
+    if (typeOfFilter === 'likes') setLikes(parseInt(e.target.value))
 
-    dispatch(orderByHeight(parseInt(e.target.value)))
+    const newArray = photosLikedData.filter((image) => image[typeOfFilter] >= parseInt(e.target.value))
+    newArray.sort((a, b) => b[typeOfFilter] - a[typeOfFilter])
+    setDisplayPhotos(newArray)
   }
-  const handleLike = (e) => {
-    setLikes(parseInt(e.target.value))
 
-    dispatch(orderByLike(parseInt(e.target.value)))
+  const handleCheckbox = () => {
   }
 
   useEffect(() => {
-    console.log('Se vuelve a renderizar el componente')
-  }, [photosLikedStatus])
+    setDisplayPhotos(photosLikedData)
+  }, [photosLikedData])
 
   return (
     <>
@@ -61,25 +57,29 @@ function MyFavorites () {
       <SearchBarFavourites />
       <section className='sectionFilter'>
         <form className='filter filter--container'>
+          <div className='filter--group--checkbox'>
+            <input type='checkbox' id='allImage' className='filter__checkbox' onClick={handleCheckbox} />
+            <label htmlFor='allImage' className='filter__title'>All images</label>
+          </div>
           <div className='filter--group'>
             <label htmlFor='widthRange' className='filter__title'> WIDTH </label>
-            <input type='range' id='widthRange' min={1000} max={9000} step={200} className='filter__range' onChange={handleWidth} />
+            <input type='range' id='widthRange' min={1000} max={9000} step={200} className='filter__range' onChange={(e) => handleFilter(e, 'width')} />
             <span className='filter__value'>{width} px</span>
           </div>
           <div className='filter--group'>
             <label htmlFor='heightRange' className='filter__title'> HEIGHT </label>
-            <input type='range' id='heightRange' min={1000} max={9000} step={200} className='filter__range' onChange={handleheight} />
+            <input type='range' id='heightRange' min={1000} max={9000} step={200} className='filter__range' onChange={(e) => handleFilter(e, 'height')} />
             <span className='filter__value'>{height} px</span>
           </div>
           <div className='filter--group'>
             <label htmlFor='likesRange' className='filter__title'> LIKES </label>
-            <input type='range' id='likesRange' className='filter__range' step={50} onChange={handleLike} />
+            <input type='range' id='likesRange' className='filter__range' step={50} onChange={(e) => handleFilter(e, 'likes')} />
             <span className='filter__value'>{likes}</span>
           </div>
         </form>
       </section>
       <section className='photos--gallery'>
-        {photosLikedData.map((photo) => (
+        {displayPhotos.map((photo) => (
           <div key={photo.id} className='photos--container'>
             <img src={photo.url} className='photos--img' alt={photo.description} />
             <img src='src\assets\iconEdit.svg' alt='icon__like' className='icon icon--edit' />
