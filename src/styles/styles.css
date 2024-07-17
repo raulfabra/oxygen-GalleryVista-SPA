@@ -178,7 +178,7 @@ body {
 .sectionFilter .filter--container {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 10px;
 }
 .sectionFilter .filter--group {
   display: flex;

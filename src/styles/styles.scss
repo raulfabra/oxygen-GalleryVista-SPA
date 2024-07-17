@@ -212,7 +212,7 @@ body {
         &--container {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 10px;
         }
 
         &--group {
@@ -221,6 +221,8 @@ body {
             align-items: center;
             margin: 0 auto;
             width: 70%;
+
+            &--checkbox {}
 
         }
 
