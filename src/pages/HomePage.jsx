@@ -44,7 +44,7 @@ function HomePage () {
   const handleImageClick = (photo) => {
     const picture = {
       id: photo.id,
-      description: photo.description,
+      description: photo.alt_description,
       url: photo.urls.regular,
       width: photo.width,
       height: photo.height,
