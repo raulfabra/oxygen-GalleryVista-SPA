@@ -79,7 +79,7 @@ body {
 }
 .searchBar__container {
   position: relative;
-  padding: 4em 2em;
+  padding: 4em 2em 2em;
 }
 .searchBar__container--input {
   width: 85%;
@@ -95,7 +95,7 @@ body {
 }
 .searchBar__container--iconGlass {
   position: absolute;
-  top: 45%;
+  top: 55%;
   left: 75%;
 }
 
@@ -171,6 +171,35 @@ body {
   background-color: #393B4D;
 }
 
+.sectionFilter {
+  padding-bottom: 2em;
+  margin: 0 auto;
+}
+.sectionFilter .filter--container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sectionFilter .filter--group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 70%;
+}
+.sectionFilter .filter__title {
+  font-family: "Jost", sans-serif;
+  font-size: 0.8rem;
+  color: #e4d3d3;
+  margin-right: 1em;
+}
+.sectionFilter .filter__value {
+  font-family: "Jost", sans-serif;
+  font-size: 0.8rem;
+  color: #ca902c;
+  margin-left: 1em;
+}
+
 @media only screen and (min-width: 730px) {
   .searchBar__container--iconGlass {
     left: 80%;
@@ -199,7 +228,7 @@ body {
   }
   .searchBar__container--iconGlass {
     position: absolute;
-    top: 45%;
+    top: 55%;
     left: 90%;
   }
   .photos--gallery {
@@ -213,6 +242,22 @@ body {
   }
   .photos--like {
     right: 50px;
+  }
+  .sectionFilter {
+    padding: 3em;
+    margin-bottom: 2.5em;
+  }
+  .sectionFilter .filter--container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .sectionFilter .filter--group {
+    display: inline;
+    margin-right: 2em;
+  }
+  .sectionFilter .filter__title {
+    font-size: 1rem;
   }
 }
 

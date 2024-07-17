@@ -44,7 +44,7 @@ function HomePage () {
   const handleImageClick = (photo) => {
     const picture = {
       id: photo.id,
-      description: photo.description,
+      description: photo.alt_description,
       url: photo.urls.regular,
       width: photo.width,
       height: photo.height,
@@ -65,7 +65,6 @@ function HomePage () {
 
     setActive(prevLiked)
     window.localStorage.setItem('photosLikedActive', JSON.stringify(prevLiked))
-    console.log(prevLiked)
   }
 
   return (
@@ -87,5 +86,3 @@ function HomePage () {
 }
 
 export default HomePage
-
-// Tiene otra página ‘My photos’ donde puede ver las imágenes que ha importado y sus datos (width, height, likes, date added)
