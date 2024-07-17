@@ -12,15 +12,15 @@ function MyFavorites () {
 
   const photosLikedData = useSelector(getPhotosLikedData)
 
-  const [displayPhotos, setDisplayPhotos] = useState(photosLikedData)
-  const [width, setWidth] = useState(1000)
-  const [height, setHeight] = useState(1000)
-  const [likes, setLikes] = useState(0)
   const [yellowLikes, setYellowLikes] = useState(() => {
     const yellowLikesStorage = window.localStorage.getItem('photosLikedActive')
     if (yellowLikesStorage) return JSON.parse(yellowLikesStorage)
     else return []
   })
+  const [displayPhotos, setDisplayPhotos] = useState(photosLikedData)
+  const [width, setWidth] = useState(1000)
+  const [height, setHeight] = useState(1000)
+  const [likes, setLikes] = useState(0)
 
   const handleDelete = (event) => {
     const removeId = event.target.getAttribute('datatype')
