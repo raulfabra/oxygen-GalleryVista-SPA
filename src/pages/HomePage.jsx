@@ -9,6 +9,7 @@ import { Title } from '../components/_title'
 import { SearchBar } from '../components/searchBar'
 import { Spinner } from '../components/spinner'
 import { useLocation } from 'react-router-dom'
+import iconLike from '../assets/iconLike.svg'
 
 function HomePage () {
   const dispatch = useDispatch()
@@ -77,7 +78,7 @@ function HomePage () {
         {photosListStatus !== 'pending' && photoListShow.map((photo) => (
           <div key={photo.id} className='photos--container' onClick={(e) => handleImageClick(photo)}>
             <img src={photo.urls.regular} className='photos--img' alt={photo.alt_description} datatype={photo.id} />
-            <img src='src\assets\iconLike.svg' alt='icon__like' className={active.includes(photo.id) ? 'icon icon--like icon--Liked ' : 'icon icon--like'} />
+            <img src={iconLike} alt='icon__like' className={active.includes(photo.id) ? 'icon icon--like icon--Liked ' : 'icon icon--like'} />
           </div>
         ))}
       </section>

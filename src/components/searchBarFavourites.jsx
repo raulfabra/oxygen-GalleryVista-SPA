@@ -31,7 +31,7 @@ export const SearchBarFavourites = () => {
     <section className='searchBar'>
       <form className='searchBar__container'>
         <input type='text' name='myphotos' id='myphotos' className='searchBar__container--input' placeholder='Search photos' onChange={handleChange} />
-        <img src='public\magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
+        <img src='./magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
       </form>
     </section>
   )
