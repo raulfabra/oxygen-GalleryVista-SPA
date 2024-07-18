@@ -65,7 +65,7 @@ function MyFavorites () {
       <SearchBarFavourites />
       <section className='sectionFilter'>
         <form className='filter filter--container'>
-          <div className='filter--group'>
+          <div className='filter--group filter--group--checkbox'>
             <input type='checkbox' id='allImage' className='filter__checkbox' onClick={handleCheckbox} />
             <label htmlFor='allImage' className='filter__title'> View All images</label>
           </div>

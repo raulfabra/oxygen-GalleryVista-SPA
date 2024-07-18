@@ -90,8 +90,10 @@ body {
     margin-top: 2em;
 
     &__container {
+        background-image: url('/public/art-gallery-directory-banner-mobile.jpeg');
         position: relative;
         padding: 4em 2em 2em;
+        margin-bottom: 2em;
 
         &--input {
             width: 85%;
@@ -161,8 +163,8 @@ body {
     }
 
     &--img {
-        width: 100%;
-        height: auto;
+        max-width: 100%;
+        max-height: auto;
     }
 
 }
@@ -206,6 +208,7 @@ body {
 .sectionFilter {
     padding-bottom: 2em;
     margin: 0 auto;
+    margin-bottom: 1em;
 
     .filter {
 
@@ -222,10 +225,11 @@ body {
             margin: 0 auto;
             width: 70%;
 
-            &--checkbox {}
-
+            &--checkbox {
+                width: 40%;
+                margin-bottom: 1em;
+            }
         }
-
         &__title {
             font-family: 'Jost', sans-serif;
             font-size: 0.8rem;
@@ -233,7 +237,6 @@ body {
 
             margin-right: 1em;
         }
-
         &__value {
             font-family: 'Jost', sans-serif;
             font-size: 0.8rem;
@@ -244,6 +247,12 @@ body {
     }
 
 
+}
+
+@media only screen and (min-width: 550px) {
+    .sectionFilter {
+        max-width: 80%;
+    }
 }
 
 @media only screen and (min-width: 730px) {
@@ -269,8 +278,10 @@ body {
     .searchBar {
         display: flex;
         justify-content: center;
+        margin-bottom: 1em;
 
         &__container {
+            background-image: none;
             width: 50%;
 
             &--input {
@@ -310,8 +321,8 @@ body {
     }
 
     .sectionFilter {
-        padding: 3em;
-        margin-bottom: 2.5em;
+        padding: 0 3em;
+        margin-bottom: 4em;
 
         .filter {
             &--container {
@@ -323,6 +334,10 @@ body {
             &--group {
                 display: inline;
                 margin-right: 2em;
+
+                &--checkbox{
+                    width: 100%;
+                }
             }
 
             &__title {

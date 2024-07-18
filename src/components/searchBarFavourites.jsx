@@ -27,6 +27,7 @@ export const SearchBarFavourites = () => {
   useEffect(() => {
     setBeforeSearchPhotos(photosLikedData)
   }, [])
+
   return (
     <section className='searchBar'>
       <form className='searchBar__container'>
