@@ -3,13 +3,14 @@ import { Header } from '../components/_header'
 import { Title } from '../components/_title'
 import { SearchBarFavourites } from '../components/searchBarFavourites'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPhotosLikedData, removeImage } from '../endpoints/favourites/photosLikedSlice'
+import { getPhotosLikedData, removeImage, updateImage } from '../endpoints/favourites/photosLikedSlice'
 import { useEffect, useState } from 'react'
 import iconDelete from '../assets/iconDelete.svg'
 import iconEdit from '../assets/iconEdit.svg'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
+import { TextField } from '@mui/material'
 
 const style = {
   position: 'absolute',
@@ -77,6 +78,21 @@ function MyFavorites () {
     setDescription(photoDescription)
   }
   const handleClose = () => setOpen(false)
+  const handleDescription = (event) => {
+    if (event.key === 'Enter') {
+      const previousDescription = event.target.defaultValue
+      const newDescription = event.target.value
+
+      const foundPhoto = displayPhotos.find((photo) => photo.description === previousDescription)
+
+      if (foundPhoto) {
+        const updatePhoto = { ...foundPhoto, description: newDescription }
+        const updatePhotosLiked = displayPhotos.map((photo) => (photo.id === updatePhoto.id) ? updatePhoto : photo)
+        dispatch(updateImage(updatePhotosLiked))
+        setDisplayPhotos(updatePhotosLiked)
+      }
+    }
+  }
 
   useEffect(() => {
     setDisplayPhotos(photosLikedData)
@@ -130,7 +146,13 @@ function MyFavorites () {
             Description
           </Typography>
           <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            {description}
+            <TextField
+              id='outlined-multiline-static'
+              multiline
+              rows={4}
+              defaultValue={description}
+              onKeyDown={handleDescription}
+            />
           </Typography>
         </Box>
       </Modal>
