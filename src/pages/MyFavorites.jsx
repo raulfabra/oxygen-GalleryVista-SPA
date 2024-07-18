@@ -5,12 +5,14 @@ import { SearchBarFavourites } from '../components/searchBarFavourites'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPhotosLikedData, removeImage, updateImage } from '../endpoints/favourites/photosLikedSlice'
 import { useEffect, useState } from 'react'
+import { saveAs } from 'file-saver'
+import iconDownload from '../assets/iconDownload.svg'
 import iconDelete from '../assets/iconDelete.svg'
 import iconEdit from '../assets/iconEdit.svg'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
-import { TextField } from '@mui/material'
+import TextField from '@mui/material/TextField'
 
 const style = {
   position: 'absolute',
@@ -68,6 +70,18 @@ function MyFavorites () {
       setLikes(0)
       setDisplayPhotos(photosLikedData)
     }
+  }
+
+  const handleDownload = (event) => {
+    const photoId = event.target.getAttribute('datatype')
+    console.log(displayPhotos)
+    const findPhotoToDownload = displayPhotos.find((photo) => photo.id === photoId)
+    fetch(findPhotoToDownload.urls.full)
+      .then((res) => res.blob())
+      .then((blob) => {
+        saveAs(blob, `${findPhotoToDownload.id}.jpg`)
+      })
+      .catch((error) => console.error(error))
   }
 
   const [open, setOpen] = useState(false)
@@ -129,9 +143,10 @@ function MyFavorites () {
       <section className='photos--gallery'>
         {displayPhotos.map((photo) => (
           <div key={photo.id} className='photos--container'>
-            <img src={photo.url} className='photos--img' alt={photo.description} onClick={handleOpen} />
-            <img src={iconEdit} alt='icon__like' className='icon icon--edit' />
-            <img src={iconDelete} alt='icon__like' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
+            <img src={photo.urls.regular} className='photos--img' alt={photo.description} onClick={handleOpen} />
+            <img src={iconEdit} alt='icon__edit' className='icon icon--edit' />
+            <img src={iconDelete} alt='icon__remove' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
+            <img src={iconDownload} alt='icon__download' className='icon icon--download' datatype={photo.id} onClick={handleDownload} />
           </div>
         ))}
       </section>
