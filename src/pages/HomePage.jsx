@@ -46,7 +46,7 @@ function HomePage () {
     const picture = {
       id: photo.id,
       description: photo.alt_description,
-      url: photo.urls.regular,
+      urls: photo.urls,
       width: photo.width,
       height: photo.height,
       likes: photo.likes,

@@ -203,6 +203,13 @@ body {
             background-color: #393B4D;
         }
     }
+
+    &--download {
+        top: 50px;
+        left: 20px;
+        background-color: #a7c018;
+    }
+
 }
 
 .sectionFilter {
@@ -258,6 +265,11 @@ body {
 @media only screen and (min-width: 730px) {
     .searchBar__container--iconGlass {
         left: 80%;
+    }
+    .icon{
+        &--download {
+            top: 100px;
+        }
     }
 }
 
@@ -319,6 +331,8 @@ body {
             right: 50px;
         }
     }
+
+    
 
     .sectionFilter {
         padding: 0 3em;
