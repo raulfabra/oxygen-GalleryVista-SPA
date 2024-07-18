@@ -21,7 +21,7 @@ export const SearchBar = () => {
     <section className='searchBar'>
       <div className='searchBar__container'>
         <input type='text' name='booking' id='booking' className='searchBar__container--input' placeholder='Search photos' onChange={handleSearch} />
-        <img src='public\magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
+        <img src='./magnifying-glass.png' alt='search__icon' className='searchBar__container--iconGlass' width={25} height={25} />
       </div>
     </section>
   )

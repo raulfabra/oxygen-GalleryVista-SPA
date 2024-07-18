@@ -5,6 +5,8 @@ import { SearchBarFavourites } from '../components/searchBarFavourites'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPhotosLikedData, removeImage } from '../endpoints/favourites/photosLikedSlice'
 import { useEffect, useState } from 'react'
+import iconDelete from '../assets/iconDelete.svg'
+import iconEdit from '../assets/iconEdit.svg'
 
 function MyFavorites () {
   const location = useLocation()
@@ -12,15 +14,15 @@ function MyFavorites () {
 
   const photosLikedData = useSelector(getPhotosLikedData)
 
-  const [displayPhotos, setDisplayPhotos] = useState(photosLikedData)
-  const [width, setWidth] = useState(1000)
-  const [height, setHeight] = useState(1000)
-  const [likes, setLikes] = useState(0)
   const [yellowLikes, setYellowLikes] = useState(() => {
     const yellowLikesStorage = window.localStorage.getItem('photosLikedActive')
     if (yellowLikesStorage) return JSON.parse(yellowLikesStorage)
     else return []
   })
+  const [displayPhotos, setDisplayPhotos] = useState(photosLikedData)
+  const [width, setWidth] = useState(1000)
+  const [height, setHeight] = useState(1000)
+  const [likes, setLikes] = useState(0)
 
   const handleDelete = (event) => {
     const removeId = event.target.getAttribute('datatype')
@@ -63,7 +65,7 @@ function MyFavorites () {
       <SearchBarFavourites />
       <section className='sectionFilter'>
         <form className='filter filter--container'>
-          <div className='filter--group'>
+          <div className='filter--group filter--group--checkbox'>
             <input type='checkbox' id='allImage' className='filter__checkbox' onClick={handleCheckbox} />
             <label htmlFor='allImage' className='filter__title'> View All images</label>
           </div>
@@ -88,8 +90,8 @@ function MyFavorites () {
         {displayPhotos.map((photo) => (
           <div key={photo.id} className='photos--container'>
             <img src={photo.url} className='photos--img' alt={photo.description} />
-            <img src='src\assets\iconEdit.svg' alt='icon__like' className='icon icon--edit' />
-            <img src='src\assets\iconDelete.svg' alt='icon__like' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
+            <img src={iconEdit} alt='icon__like' className='icon icon--edit' />
+            <img src={iconDelete} alt='icon__like' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
           </div>
         ))}
       </section>

@@ -14,9 +14,12 @@ export const PhotosLikedSlice = createSlice({
     removeImage: (state, action) => {
       state.data = state.data.filter((image) => image.id !== action.payload.id)
       window.localStorage.setItem('photosLiked', JSON.stringify(state.data))
+    },
+    updateImage: (state, action) => {
+      state.data = action.payload
     }
   }
 })
 
 export const getPhotosLikedData = (state) => state.photosLiked.data
-export const { addImage, removeImage } = PhotosLikedSlice.actions
+export const { addImage, removeImage, updateImage } = PhotosLikedSlice.actions
