@@ -7,6 +7,21 @@ import { getPhotosLikedData, removeImage } from '../endpoints/favourites/photosL
 import { useEffect, useState } from 'react'
 import iconDelete from '../assets/iconDelete.svg'
 import iconEdit from '../assets/iconEdit.svg'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+}
 
 function MyFavorites () {
   const location = useLocation()
@@ -54,6 +69,15 @@ function MyFavorites () {
     }
   }
 
+  const [open, setOpen] = useState(false)
+  const [description, setDescription] = useState('')
+  const handleOpen = (e) => {
+    const photoDescription = e.target.getAttribute('alt')
+    setOpen(true)
+    setDescription(photoDescription)
+  }
+  const handleClose = () => setOpen(false)
+
   useEffect(() => {
     setDisplayPhotos(photosLikedData)
   }, [photosLikedData])
@@ -89,12 +113,27 @@ function MyFavorites () {
       <section className='photos--gallery'>
         {displayPhotos.map((photo) => (
           <div key={photo.id} className='photos--container'>
-            <img src={photo.url} className='photos--img' alt={photo.description} />
+            <img src={photo.url} className='photos--img' alt={photo.description} onClick={handleOpen} />
             <img src={iconEdit} alt='icon__like' className='icon icon--edit' />
             <img src={iconDelete} alt='icon__like' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
           </div>
         ))}
       </section>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Typography id='modal-modal-title' variant='h6' component='h2'>
+            Description
+          </Typography>
+          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+            {description}
+          </Typography>
+        </Box>
+      </Modal>
     </>
   )
 }
