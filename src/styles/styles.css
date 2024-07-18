@@ -78,8 +78,10 @@ body {
   margin-top: 2em;
 }
 .searchBar__container {
+  background-image: url("/public/art-gallery-directory-banner-mobile.jpeg");
   position: relative;
   padding: 4em 2em 2em;
+  margin-bottom: 2em;
 }
 .searchBar__container--input {
   width: 85%;
@@ -137,8 +139,8 @@ body {
   cursor: pointer;
 }
 .photos--img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: auto;
 }
 
 .icon {
@@ -174,6 +176,7 @@ body {
 .sectionFilter {
   padding-bottom: 2em;
   margin: 0 auto;
+  margin-bottom: 1em;
 }
 .sectionFilter .filter--container {
   display: flex;
@@ -186,6 +189,10 @@ body {
   align-items: center;
   margin: 0 auto;
   width: 70%;
+}
+.sectionFilter .filter--group--checkbox {
+  width: 40%;
+  margin-bottom: 1em;
 }
 .sectionFilter .filter__title {
   font-family: "Jost", sans-serif;
@@ -200,6 +207,11 @@ body {
   margin-left: 1em;
 }
 
+@media only screen and (min-width: 550px) {
+  .sectionFilter {
+    max-width: 80%;
+  }
+}
 @media only screen and (min-width: 730px) {
   .searchBar__container--iconGlass {
     left: 80%;
@@ -215,8 +227,10 @@ body {
   .searchBar {
     display: flex;
     justify-content: center;
+    margin-bottom: 1em;
   }
   .searchBar__container {
+    background-image: none;
     width: 50%;
   }
   .searchBar__container--input {
@@ -244,8 +258,8 @@ body {
     right: 50px;
   }
   .sectionFilter {
-    padding: 3em;
-    margin-bottom: 2.5em;
+    padding: 0 3em;
+    margin-bottom: 4em;
   }
   .sectionFilter .filter--container {
     display: flex;
@@ -255,6 +269,9 @@ body {
   .sectionFilter .filter--group {
     display: inline;
     margin-right: 2em;
+  }
+  .sectionFilter .filter--group--checkbox {
+    width: 100%;
   }
   .sectionFilter .filter__title {
     font-size: 1rem;
