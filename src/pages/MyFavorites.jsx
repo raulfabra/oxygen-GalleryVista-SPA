@@ -3,10 +3,26 @@ import { Header } from '../components/_header'
 import { Title } from '../components/_title'
 import { SearchBarFavourites } from '../components/searchBarFavourites'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPhotosLikedData, removeImage } from '../endpoints/favourites/photosLikedSlice'
+import { getPhotosLikedData, removeImage, updateImage } from '../endpoints/favourites/photosLikedSlice'
 import { useEffect, useState } from 'react'
 import iconDelete from '../assets/iconDelete.svg'
 import iconEdit from '../assets/iconEdit.svg'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
+import { TextField } from '@mui/material'
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+}
 
 function MyFavorites () {
   const location = useLocation()
@@ -54,6 +70,30 @@ function MyFavorites () {
     }
   }
 
+  const [open, setOpen] = useState(false)
+  const [description, setDescription] = useState('')
+  const handleOpen = (e) => {
+    const photoDescription = e.target.getAttribute('alt')
+    setOpen(true)
+    setDescription(photoDescription)
+  }
+  const handleClose = () => setOpen(false)
+  const handleDescription = (event) => {
+    if (event.key === 'Enter') {
+      const previousDescription = event.target.defaultValue
+      const newDescription = event.target.value
+
+      const foundPhoto = displayPhotos.find((photo) => photo.description === previousDescription)
+
+      if (foundPhoto) {
+        const updatePhoto = { ...foundPhoto, description: newDescription }
+        const updatePhotosLiked = displayPhotos.map((photo) => (photo.id === updatePhoto.id) ? updatePhoto : photo)
+        dispatch(updateImage(updatePhotosLiked))
+        setDisplayPhotos(updatePhotosLiked)
+      }
+    }
+  }
+
   useEffect(() => {
     setDisplayPhotos(photosLikedData)
   }, [photosLikedData])
@@ -89,12 +129,33 @@ function MyFavorites () {
       <section className='photos--gallery'>
         {displayPhotos.map((photo) => (
           <div key={photo.id} className='photos--container'>
-            <img src={photo.url} className='photos--img' alt={photo.description} />
+            <img src={photo.url} className='photos--img' alt={photo.description} onClick={handleOpen} />
             <img src={iconEdit} alt='icon__like' className='icon icon--edit' />
             <img src={iconDelete} alt='icon__like' className='icon icon--remove' datatype={photo.id} onClick={handleDelete} />
           </div>
         ))}
       </section>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Typography id='modal-modal-title' variant='h6' component='h2'>
+            Description
+          </Typography>
+          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+            <TextField
+              id='outlined-multiline-static'
+              multiline
+              rows={4}
+              defaultValue={description}
+              onKeyDown={handleDescription}
+            />
+          </Typography>
+        </Box>
+      </Modal>
     </>
   )
 }
